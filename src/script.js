@@ -32,29 +32,101 @@ let month = months[now.getMonth()];
     "Friday",
     "Saturday"]
 
-let day = days[now.getDay()];
+let today = days[now.getDay()];
 
-let currentTime = document.querySelector("h4");
-currentTime.innerHTML = `${hours}:${minutes}, ${day} ${date} ${month} ${year}`
+document.querySelector("#current-date").innerHTML = `${hours}:${minutes}, ${today} ${date} ${month} ${year}`;
 
-//Show City//
+//Convert Celcius to Farenheight //
 
+function displayFarenheightTemp(event){
+event.preventDefault();
+ let farenheightTemperature = (celciusTemperature *9)/5+32;  
+ let tempElement = document.querySelector ("#current-temp")
+ tempElement.innerHTML = Math.round(farenheightTemperature)
+
+}
+
+function displayCelciusTemp(event){
+event.preventDefault();
+let tempElement = document.querySelector ("#current-temp")
+ tempElement.innerHTML = Math.round(celciusTemperature);
+}
+
+let celciusTemperature = null
+
+let farenheightLink = document.querySelector("#farenheight-link")
+farenheightLink.addEventListener("click", displayFarenheightTemp)
+
+let celciusLink = document.querySelector("#celcius-link")
+celciusLink.addEventListener("click", displayCelciusTemp)
+
+
+
+
+
+
+//NewDate//
+//function formatDate(timestamp){}
+
+
+//Show Weather Conditions == Temp, Weather Description, WindSpeed & Humditidy//
 
 function showWeatherSearch(response) {
   console.log(response.data);
-  document.querySelector("#current-city").innerHTML = response.data.name;
-  document.querySelector("#current-temp").innerHTML = Math.round(response.data.main.temp  );
+  document.querySelector("#current-city").innerHTML = (response.data.name)
+  document.querySelector("#current-temp").innerHTML = Math.round(celciusTemperature);
   document.querySelector("#weather-description").innerHTML = response.data.weather[0].main;
-}
+  document.querySelector("#windspeed-updated-figure").innerHTML = Math.round(response.data.wind.speed);
+  document.querySelector("#humidity-updated-figure").innerHTML = response.data.main.humidity;
+  document.querySelector("#current-weather-icon").setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
+  document.querySelector("#current-weather-icon").setAttribute("alt", `http://openweathermap.org/img/wn/${response.data.weather[0].main}@2x.png`)
 
-function search(event) {
+  celciusTemperature = response.data.main.temp
+  }
+
+
+
+  //Show City//
+
+
+
+  function search(city){
+  let apiKey = "adfd65ee729dfdb8d93f0ffbb4c5f25e";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(showWeatherSearch);
+  }
+
+
+  function handleSubmit(event) {
   event.preventDefault();
+  let city = document.querySelector("#search-text-input");
+  search(city.value)
+  }
+
+
+
+let searchForm = document.querySelector("#search-form");
+searchForm.addEventListener("submit", handleSubmit);
+
+
+//Current Location Button   //
+
+function getCurrentLocation (event){
+  event.preventDefault();
+   navigator.geolocation.getCurrentPosition(searchLocation);
+}
+function searchLocation (position) {
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
   let apiKey = "adfd65ee729dfdb8d93f0ffbb4c5f25e";
   let units = "metric";
-  let city = document.querySelector("#search-text-input").value;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`
+
   axios.get(apiUrl).then(showWeatherSearch);
 }
 
-let searchForm = document.querySelector("#search-form");
-searchForm.addEventListener("submit", search);
+  let currentLocationButton = document.querySelector("#current-location-button")
+  currentLocationButton.addEventListener("click", getCurrentLocation)
+
+
+  search("New York")

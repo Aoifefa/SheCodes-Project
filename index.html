@@ -19,64 +19,105 @@
 </head>
 
 <body>
+
     <div class="container">
 
+        <!--Form-->
         <!--Search bar-->
-        <form id="search-form">
-            <input type="search" placeholder="Enter your city" id="search-text-input" />
-            <input id="input-search-button" type="submit" value="Search" />
+        <form class="search-form" id="search-form">
+            <div class="row">
+                <div class="col-6">
+                    <input type="search" placeholder="Enter your city" id="search-text-input" autofocus="on"
+                        autocomplete="off" class="form-control shadow-sm" />
+                </div>
 
+                <!--Search button-->
+                <div class="col-2">
+                    <input id="input-search-button" type="submit" value="Search "
+                        class="form-control btn btn-outline-light shadow-sm" />
+                </div>
+                <!--Current Location Button-->
+                <div class="col-4">
+                    <input id="current-location-button" type="submit" value="📍 Current Location"
+                        class="btn btn-outline-light w-100" />
+                </div>
+            </div>
         </form>
+
+
+
         </br>
 
         <!--Current conditions-->
         <div class="row">
             <div class="col-8">
-                <h1 id="current-city"> Belfast </h1>
-                <h4 class="date"> </h4>
-                <h4 id="weather-description"> Cloudy </h4>
+                <div class="clearfix">
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="CW" id="current-weather-icon">
+                    <h1 id="current-city"> </h1>
+                </div>
+                <h4 id="current-date"> </h4>
+                <h4 id="weather-description"> </h4>
             </div>
+
 
             <div class="col-4">
                 <span id="current-temp">3</span>
-                <span id="celcius">°C</span>
+
+                <a href="#" id="celcius-link" class="active">°C </a>
+                <span id="divider"> | </span>
+                <a href="#" id="farenheight-link">°F</a>
+
+                <ul>
+                    <li id="windspeed">
+                        Wind Speed:
+                        <span id="windspeed-updated-figure"> 3 </span>
+                        mph
+                    </li>
+                    <li id="humidity">
+                        Humidity:
+                        <span id="humidity-updated-figure"> 52 </span>
+                        %
+                    </li>
+
+                </ul>
+
 
             </div>
 
         </div>
 
-        <!--5 Day Lookahead-->
+        <!--Lookahead-->
 
         </br>
-        <h2 class="lookahead"> <strong> 5 Day Lookahead </strong></h2>
+        <h2 class="lookahead"> </h2>
 
         <div class="row">
             <div class="col">
-                <h3>Mon</h3>
+                <h3 id="today+1">Mon</h3>
                 <i class="fas fa-cloud-showers-heavy"></i>
                 <h5 class="degrees">9°c</h5>
             </div>
 
             <div class="col">
-                <h3>Tue</h3>
+                <h3 id="today+2">Tue</h3>
                 <i class="fas fa-cloud-rain"> </i>
                 <h5 class="degrees">8°c</h5>
             </div>
 
             <div class="col">
-                <h3>Wed</h3>
+                <h3 id="today+3"> Wed</h3>
                 <i class="fas fa-cloud"></i>
                 <h5 class="degrees" 5>7°c</h5>
             </div>
 
             <div class="col">
-                <h3>Thu</h3>
+                <h3 id="today+4"> Thu</h3>
                 <i class="fas fa-cloud-sun-rain"></i>
                 <h5 class="degrees" 5>8°c</h5>
             </div>
 
             <div class="col">
-                <h3>Fri</h3>
+                <h3 id="today+5">Fri</h3>
                 <i class="far fa-sun"></i>
                 <h5 class="degrees">6°c</h5>
             </div>
@@ -87,7 +128,10 @@
         <!--Footer-->
         </br>
         <footer>
-             <a href="https://github.com/Aoifefa/SheCodes-Project.git"> Open Source coded </a> by Aoife Murtagh
+            <a id="githublink" href="https://github.com/Aoifefa/SheCodes-Project.git" target="_blank"> Open Source
+                coded</a>
+            by <a id="linkedin" href="https://www.linkedin.com/in/aoife-murtagh-59b10578/" target="_blank"> Aoife
+                Murtagh</a>
         </footer>
 
     </div>
