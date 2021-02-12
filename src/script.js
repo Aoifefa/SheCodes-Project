@@ -73,6 +73,7 @@ celciusLink.addEventListener("click", displayCelciusTemp)
 
 function showWeatherSearch(response) {
   console.log(response.data);
+  celciusTemperature = response.data.main.temp
   document.querySelector("#current-city").innerHTML = (response.data.name)
   document.querySelector("#current-temp").innerHTML = Math.round(celciusTemperature);
   document.querySelector("#weather-description").innerHTML = response.data.weather[0].main;
@@ -81,7 +82,7 @@ function showWeatherSearch(response) {
   document.querySelector("#current-weather-icon").setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
   document.querySelector("#current-weather-icon").setAttribute("alt", `http://openweathermap.org/img/wn/${response.data.weather[0].main}@2x.png`)
 
-  celciusTemperature = response.data.main.temp
+  
   }
 
 
