@@ -127,3 +127,13 @@ footer {
 img {
   float: left;
 }
+
+#input-search-button,
+#current-location-button {
+  font-weight: 500;
+}
+
+h3 {
+  text-align: center;
+  font-size: 27px;
+}

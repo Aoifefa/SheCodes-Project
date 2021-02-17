@@ -1,13 +1,18 @@
 //Show Day & Time//
 
-
-let now = new Date();
-
-let date = now.getDate();
-let year = now.getFullYear();
-let hours = now.getHours();
-let minutes = (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
-let months = [
+function formatDate(timestamp) {
+  let date = new Date(timestamp);
+   let days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+  let day = days[date.getDay()];
+  let months = [
     "January",
     "February",
     "March",
@@ -21,20 +26,28 @@ let months = [
     "November",
     "December"
 ]
-let month = months[now.getMonth()];
 
- let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"]
+let month = months[date.getMonth()];
+  
+return `${day} ${formatHours(timestamp)} ${month}`;
+}
 
-let today = days[now.getDay()];
 
-document.querySelector("#current-date").innerHTML = `${hours}:${minutes}, ${today} ${date} ${month} ${year}`;
+function formatHours(timestamp) {
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${hours}:${minutes}`;
+}
+
+
 
 //Convert Celcius to Farenheight //
 
@@ -65,10 +78,6 @@ celciusLink.addEventListener("click", displayCelciusTemp)
 
 
 
-//NewDate//
-//function formatDate(timestamp){}
-
-
 //Show Weather Conditions == Temp, Weather Description, WindSpeed & Humditidy//
 
 function showWeatherSearch(response) {
@@ -81,6 +90,7 @@ function showWeatherSearch(response) {
   document.querySelector("#humidity-updated-figure").innerHTML = response.data.main.humidity;
   document.querySelector("#current-weather-icon").setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
   document.querySelector("#current-weather-icon").setAttribute("alt", `http://openweathermap.org/img/wn/${response.data.weather[0].main}@2x.png`)
+  document.querySelector("#current-date-day").innerHTML = formatDate();
 
   
   }
@@ -89,12 +99,40 @@ function showWeatherSearch(response) {
 
   //Show City//
 
+function displayForecast (response){
+let forecastElement = document.querySelector("#forecast");
+let forecast = response.data.list[0];
+forecastElement.innerHTML = `  
+                <div class="col-2">
+                <h3 id="time1">${formatHours(forecast.dt*1000)}</h3>
+                <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
+                <h5 class="degrees"><strong>${Math.round(forecast.main.temp_max)}°</strong>/ ${Math.round(forecast.main.temp_min)}°</h5>
+            </div>`;
+
+
+/*let forecast = response.data.list[1];
+  forecastElement.innerHTML += `  
+  <div class="col-2">
+  <h3 id="time1">${formatHours(forecast.dt*1000)}</h3>
+   <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
+   h5 class="degrees"><strong>${Math.round(forecast.main.temp_max)}°</strong>/ ${Math.round(forecast.main.temp_min)}°</h5>
+ </div>`; */
+}
+
+
+
+
+
 
 
   function search(city){
   let apiKey = "adfd65ee729dfdb8d93f0ffbb4c5f25e";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showWeatherSearch);
+
+
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
+  axios.get(apiUrl).then(displayForecast);
   }
 
 
@@ -130,4 +168,4 @@ function searchLocation (position) {
   currentLocationButton.addEventListener("click", getCurrentLocation)
 
 
-  search("New York")
+  search("Dublin")
