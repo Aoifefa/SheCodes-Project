@@ -3,14 +3,14 @@
 function formatDate(timestamp) {
   let date = new Date(timestamp);
    let days = [
+    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday"
-  ];
+      ];
   let day = days[date.getDay()];
   let months = [
     "January",
@@ -48,7 +48,6 @@ function formatHours(timestamp) {
 }
 
 
-
 //Convert Celcius to Farenheight //
 
 function displayFarenheightTemp(event){
@@ -75,9 +74,6 @@ celciusLink.addEventListener("click", displayCelciusTemp)
 
 
 
-
-
-
 //Show Weather Conditions == Temp, Weather Description, WindSpeed & Humditidy//
 
 function showWeatherSearch(response) {
@@ -90,9 +86,8 @@ function showWeatherSearch(response) {
   document.querySelector("#humidity-updated-figure").innerHTML = response.data.main.humidity;
   document.querySelector("#current-weather-icon").setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
   document.querySelector("#current-weather-icon").setAttribute("alt", `http://openweathermap.org/img/wn/${response.data.weather[0].main}@2x.png`)
-  document.querySelector("#current-date-day").innerHTML = formatDate();
+  document.querySelector("#current-date-day").innerHTML = formatDate (response.data.dt * 1000);
 
-  
   }
 
 
@@ -110,13 +105,13 @@ forecastElement.innerHTML = `
             </div>`;
 
 
-/*let forecast = response.data.list[1];
+let forecast = response.data.list[1];
   forecastElement.innerHTML += `  
-  <div class="col-2">
-  <h3 id="time1">${formatHours(forecast.dt*1000)}</h3>
-   <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
-   h5 class="degrees"><strong>${Math.round(forecast.main.temp_max)}°</strong>/ ${Math.round(forecast.main.temp_min)}°</h5>
- </div>`; */
+        <div class="col-2">
+        <h3 id="time1">${formatHours(forecast.dt*1000)}</h3>
+        <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
+        <h5 class="degrees"><strong>${Math.round(forecast.main.temp_max)}°</strong>/ ${Math.round(forecast.main.temp_min)}°</h5>
+ </div>`; 
 }
 
 
