@@ -2,6 +2,8 @@
 
 function formatDate(timestamp) {
   let date = new Date(timestamp);
+  let todaydate = date.getDate();
+  let year = date.getFullYear();
    let days = [
     "Sunday",
     "Monday",
@@ -29,7 +31,7 @@ function formatDate(timestamp) {
 
 let month = months[date.getMonth()];
   
-return `${day} ${formatHours(timestamp)} ${month}`;
+return ` ${formatHours(timestamp)},  ${day} ${todaydate} ${month} ${year}`;
 }
 
 
@@ -93,30 +95,24 @@ function showWeatherSearch(response) {
 
 
   //Show City//
+  //Show 6 hour forecast lookahead//
 
-function displayForecast (response){
+function displayForecast (response) {
 let forecastElement = document.querySelector("#forecast");
-let forecast = response.data.list[0];
-forecastElement.innerHTML = `  
+forecastElement.innerHTML = null;
+let forecast=null;
+
+for (let index = 0; index < 6; index++){
+  forecast = response.data.list[index];
+  forecastElement.innerHTML += `  
                 <div class="col-2">
                 <h3 id="time1">${formatHours(forecast.dt*1000)}</h3>
                 <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
                 <h5 class="degrees"><strong>${Math.round(forecast.main.temp_max)}°</strong>/ ${Math.round(forecast.main.temp_min)}°</h5>
             </div>`;
 
-
-let forecast = response.data.list[1];
-  forecastElement.innerHTML += `  
-        <div class="col-2">
-        <h3 id="time1">${formatHours(forecast.dt*1000)}</h3>
-        <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
-        <h5 class="degrees"><strong>${Math.round(forecast.main.temp_max)}°</strong>/ ${Math.round(forecast.main.temp_min)}°</h5>
- </div>`; 
 }
-
-
-
-
+}
 
 
 
@@ -162,5 +158,5 @@ function searchLocation (position) {
   let currentLocationButton = document.querySelector("#current-location-button")
   currentLocationButton.addEventListener("click", getCurrentLocation)
 
-
+//Landing page city//
   search("Dublin")
