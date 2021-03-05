@@ -16,7 +16,7 @@ function formatDate(timestamp) {
   let day = days[date.getDay()];
   let months = [
     "January",
-    "February",
+    "Feb",
     "March",
     "April",
     "May",
@@ -31,7 +31,7 @@ function formatDate(timestamp) {
 
 let month = months[date.getMonth()];
   
-return ` ${formatHours(timestamp)},  ${day} ${todaydate} ${month} ${year}`;
+return `Last updated: ${day} ${todaydate} ${month}, ${formatHours(timestamp)}`;
 }
 
 
@@ -159,4 +159,4 @@ function searchLocation (position) {
   currentLocationButton.addEventListener("click", getCurrentLocation)
 
 //Landing page city//
-  search("Dublin")
+  search("Madrid")
