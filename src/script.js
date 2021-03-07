@@ -153,6 +153,9 @@ function searchLocation (position) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`
 
   axios.get(apiUrl).then(showWeatherSearch);
+
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`
+  axios.get(apiUrl).then(displayForecast);
 }
 
   let currentLocationButton = document.querySelector("#current-location-button")
